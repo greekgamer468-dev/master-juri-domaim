@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASTER JIRO • Owned Sluts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    .logo-header {
+      font-size: 2.8rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #a855f7, #eab308);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    /* Hero Background - Put your image URL here */
+    .hero-bg {
+      background-image: linear-gradient(rgba(0,0,0,0.65), rgba(75,0,130,0.75)),
+                        url('https://picsum.photos/id/1015/1920/1080'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- ROLE SELECTION MODAL -->
+  <div id="roleModal" class="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center">
+    <div class="text-center max-w-md px-8">
+      <h1 class="text-5xl font-black mb-8 text-purple-400">MASTER JIRO'S DOMAIN</h1>
+      <p class="text-2xl mb-10">Are you a Sub or a Dom?</p>
+     
+      <div class="grid grid-cols-2 gap-6">
+        <button onclick="selectRole('sub')"
+                class="py-8 bg-gradient-to-b from-purple-700 to-purple-900 hover:from-purple-600 rounded-3xl text-2xl font-bold transition">
+          SUB
+        </button>
+        <button onclick="selectRole('dom')"
+                class="py-8 bg-gradient-to-b from-zinc-700 to-zinc-900 hover:from-zinc-600 rounded-3xl text-2xl font-bold transition">
+          DOM
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOM REJECTION SCREEN -->
+  <div id="domRejection" class="hidden fixed inset-0 z-[300] flex items-center justify-center bg-cover bg-center"
+       style="background-image: linear-gradient(rgba(0,0,0,0.88), rgba(153,0,0,0.75)), 
+              url('pics1.png');">
+    <div class="text-center max-w-lg px-8">
+      <h2 class="text-6xl font-black text-red-500 mb-6">NO DOMS ALLOWED</h2>
+      <p class="text-3xl mb-8 text-red-300">Aside from Master Jiro...</p>
+      <p class="text-5xl font-bold text-yellow-400 mb-12">"You Cuck"</p>
+      <button onclick="backToRole()" 
+              class="mt-8 px-12 py-5 border-2 border-red-500/70 hover:bg-red-500/10 rounded-full text-xl font-semibold">
+        Go Back
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN GALLERY SITE -->
+  <div id="mainSite" class="hidden">
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-lg border-b border-purple-900 py-6">
+      <div class="max-w-screen-2xl mx-auto px-8 flex items-center justify-between">
+        <a href="https://x.com/bratdaddyjiro" target="_blank" class="flex items-center gap-3 hover:opacity-80 transition">
+          <h1 class="logo-header">MASTER JIRO</h1>
+          <i class="fa-brands fa-x-twitter text-3xl text-white"></i>
+        </a>
+        
+        <button onclick="showUploadModal()"
+                class="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-amber-500 text-black font-bold rounded-full">
+          <i class="fa-solid fa-upload"></i>
+          <span>UPLOAD PIC / VID</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-bg h-screen flex items-center relative pt-20">
+      <div class="max-w-screen-2xl mx-auto px-8 text-center">
+        <h2 class="text-7xl md:text-8xl font-black leading-none mb-6 tracking-wider text-white drop-shadow-2xl">
+          OWNED SLUTS<br>GALLERY
+        </h2>
+        <p class="text-2xl text-gray-200 max-w-xl mx-auto drop-shadow-md">
+          Share your pics and videos publicly
+        </p>
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-12">
+      <h3 class="text-4xl font-bold mb-8">Public Gallery</h3>
+      
+      <div id="gallery" class="gallery-grid"></div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center gap-4 mt-12" id="pagination"></div>
+    </div>
+  </div>
+
+  <!-- UPLOAD MODAL -->
+  <div id="uploadModal" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center">
+    <div class="bg-zinc-900 rounded-3xl w-full max-w-md mx-4 p-8">
+      <h2 class="text-3xl font-bold mb-6 text-purple-400">Upload to Gallery</h2>
+      <form id="uploadForm">
+        <input type="file" id="modalFile" accept="image/*,video/*" class="w-full bg-zinc-800 border border-purple-600 rounded-2xl p-4 mb-6">
+        <textarea id="modalDesc" rows="3" class="w-full bg-zinc-800 border border-purple-600 rounded-2xl p-4 mb-6" placeholder="Write something... (optional)"></textarea>
+        
+        <div class="flex gap-4">
+          <button type="button" onclick="hideUploadModal()" class="flex-1 py-4 border border-gray-600 rounded-2xl">Cancel</button>
+          <button type="submit" class="flex-1 py-4 bg-gradient-to-r from-purple-600 to-amber-500 text-black font-bold rounded-2xl">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let uploads = JSON.parse(localStorage.getItem('galleryUploads')) || [];
+    const itemsPerPage = 20;
+
+    function selectRole(role) {
+      if (role === 'sub') {
+        document.getElementById('roleModal').classList.add('hidden');
+        document.getElementById('mainSite').classList.remove('hidden');
+        renderGallery();
+      } else {
+        document.getElementById('roleModal').classList.add('hidden');
+        document.getElementById('domRejection').classList.remove('hidden');
+      }
+    }
+
+    function backToRole() {
+      document.getElementById('domRejection').classList.add('hidden');
+      document.getElementById('roleModal').classList.remove('hidden');
+    }
+
+    function showUploadModal() {
+      document.getElementById('uploadModal').classList.remove('hidden');
+      document.getElementById('uploadModal').classList.add('flex');
+    }
+
+    function hideUploadModal() {
+      document.getElementById('uploadModal').classList.add('hidden');
+      document.getElementById('uploadModal').classList.remove('flex');
+    }
+
+    function renderGallery(page = 1) {
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = '';
+
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageItems = uploads.slice(start, end);
+
+      pageItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-zinc-900 rounded-3xl overflow-hidden border border-purple-900/30";
+
+        if (item.type.startsWith('image')) {
+          card.innerHTML = `
+            <img src="${item.url}" class="w-full h-64 object-cover">
+            <div class="p-4">
+              <p class="text-gray-300 text-sm line-clamp-2">${item.desc || 'No description'}</p>
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <video src="${item.url}" class="w-full h-64 object-cover" controls></video>
+            <div class="p-4">
+              <p class="text-gray-300 text-sm line-clamp-2">${item.desc || 'No description'}</p>
+            </div>
+          `;
+        }
+        gallery.appendChild(card);
+      });
+
+      renderPagination(page);
+    }
+
+    function renderPagination(currentPage) {
+      const totalPages = Math.ceil(uploads.length / itemsPerPage);
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `px-5 py-2 rounded-full ${i === currentPage ? 'bg-purple-600 text-white' : 'bg-zinc-800 hover:bg-zinc-700'}`;
+        btn.textContent = i;
+        btn.onclick = () => renderGallery(i);
+        pagination.appendChild(btn);
+      }
+    }
+
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const fileInput = document.getElementById('modalFile');
+      const desc = document.getElementById('modalDesc').value;
+
+      if (fileInput.files.length === 0) {
+        alert("Please select a file");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const newUpload = {
+          url: event.target.result,
+          type: file.type,
+          desc: desc || '',
+          timestamp: new Date().toISOString()
+        };
+
+        uploads.unshift(newUpload);
+        localStorage.setItem('galleryUploads', JSON.stringify(uploads));
+
+        hideUploadModal();
+        this.reset();
+        renderGallery(1);
+        alert("✅ Uploaded successfully!");
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
